@@ -10,7 +10,7 @@ function tests() {
     keys.push(generateKey())
   }
 
-  console.log('| max recipients count | recipient count | receiver key index | msg size (bytes) | decryption time (nanoseconds) |')
+  console.log('| max recipients count | recipient count | receiver type | msg size (bytes) | decryption time (nanoseconds) |')
   console.log('|---|---|---|---|---|')
 
   const msgSize = 1028 * 16
@@ -23,10 +23,11 @@ function tests() {
 
       const recipients = keys.slice(0, recipientsCount).map(convertToPublicKey)
 
-      for (const receiverIndex of [recipientsCount - 1, null]) {
-        const receiver = convertToSecretKey(keys[receiverIndex == null ? 255 : receiverIndex])
+      for (const receiverType of ['last', 'none']) {
+        const receiverIndex = receiverType === 'last' ? recipientsCount - 1 : 255
+        const receiver = convertToSecretKey(keys[receiverIndex])
 
-        const shouldDecrypt = receiverIndex != null
+        const shouldDecrypt = receiverType !== 'none'
 
         const decryptionTime = test({
           max,
@@ -36,7 +37,7 @@ function tests() {
           shouldDecrypt,
         })
 
-        console.log(`| ${max} | ${recipientsCount} | ${receiverIndex} | ${msgSize} | ${decryptionTime} |`)
+        console.log(`| ${max} | ${recipientsCount} | ${receiverType} | ${msgSize} | ${decryptionTime} |`)
       }
     }
   }

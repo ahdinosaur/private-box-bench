@@ -1,0 +1,16 @@
+{
+  "name": "private-box-bench",
+  "private": true,
+  "description": "tests for a discussion on Scuttlebutt: `%Tx+4gYbcZuQ57gsrF+ljftYP9OlMgJSHSL0BppKiebk=.sha256`",
+  "type": "module",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [],
+  "author": "Michael Williams",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chloride": "^2.4.1",
+    "private-box": "^0.3.1"
+  }
+}
